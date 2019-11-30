@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Race from './components/Race/Race';
+import RaceNew from './components/Race/RaceNew';
+import RaceEdit from './components/Race/RaceEdit';
 import Home from './components/Home/Home';
-import Races from './components/Races/index/Races';
-import RaceNew from './components/Races/new/New';
-import RaceEdit from './components/Races/edit/Edit';
 
 class Routes extends Component{
   render(){
@@ -11,9 +11,9 @@ class Routes extends Component{
       <Router>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/races" component={Races} />
-          <Route path="/races/new" component={RaceNew} />
-          <Route path="/races/:id/edit" component={RaceEdit} />
+          <Route path="/races" exact component={Race} />
+          <Route path="/races/new" exact component={RaceNew} />
+          <Route path="/races/:id/edit" exact component={RaceEdit} />
         </Switch>
       </Router>
     );
