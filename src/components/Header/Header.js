@@ -16,6 +16,12 @@ const Header = (props) => {
           <Nav.Link href="/races" >
             Corridas
           </Nav.Link>
+          <Nav.Link href="/type_tests" >
+            Tipos de Prova
+          </Nav.Link>
+          <Nav.Link href="/tests" >
+            Provas
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

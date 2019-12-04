@@ -4,27 +4,27 @@ import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import {FaArrowLeft, FaArrowRight, FaPlus, FaPen, FaTrash, FaRunning} from 'react-icons/fa';
 
-const Race = (props) => {
+const Test = (props) => {
 
-const [races, setRaces] = useState([]);
+const [tests, setTests] = useState([]);
 const [page, setPage] = useState(1);
 const [disable,setDisable] = useState(false);
-const [total_race, setTotalRace] = useState(0);
+const [total_test, setTotalTest] = useState(0);
 
 useEffect(()=>{
-  api.get('/races').then(response => {
-    setTotalRace(response.data.total);
+  api.get('/tests').then(response => {
+    setTotalTest(response.data.total);
   });
 },[]);
 
 // carrega todos as corridas
 useEffect(() =>{
-  api.get(`/races?page=${page}`).then(response =>{
-    setRaces(response.data.races);
+  api.get(`/tests?page=${page}`).then(response =>{
+    setTests(response.data.tests);
   });
 
-  api.get(`/races?page=${page+1}`).then(response => {
-    setDisable(response.data.races.length>0);
+  api.get(`/tests?page=${page+1}`).then(response => {
+    setDisable(response.data.tests.length>0);
   });
 
 },[page]);
@@ -38,34 +38,34 @@ const nextPage =  () => {
   setPage(disable ? page+1 : page);
 }
 
-const handleDestroy = async (race) =>{
-  if(window.confirm(`Deseja Excluir: ${race.local}?`)){
+const handleDestroy = async (test) =>{
+  if(window.confirm(`Deseja Excluir ?`)){
     // apaga a corrida no banco
-    await api.delete(`/races/${race.id}`, { method: 'DELETE' }).then(response =>{
-       // remove a corrida da lista
-       setRaces(races.filter((item) => item !== race));
-       // remove to total de item
-       setTotalRace(total_race - 1);
+    await api.delete(`/tests/${test.id}`, { method: 'DELETE' });
 
-       setPage(1);
-    }).catch(error => {
-      alert("A corrida está associada a uma prova e não pode ser deletada !");
-    });
+    // remove a corrida da lista
+    setTests(tests.filter((item) => item !== test));
+
+    // remove to total de item
+    setTotalTest(total_test - 1);
+
+
+    setPage(1);
+
   }
 }
 
 const loadBody = () =>{
-  return races.map((race, index )=>{
+  return tests.map((test, index )=>{
       return (<tr key={index}>
-        <td>{race.id}</td>
-        <td>{race.local}</td>
-        <td>{race.description.substr(0,20)} ...</td>
-        <td>{race.date_race}</td>
+        <td>{test.id}</td>
+        <td>{test.race}</td>
+        <td>{test.type_test}</td>
         <td>
-          <Link to={`/races/${race.id}/edit`} className="btn btn-success btn-sm">
+          <Link to={`/tests/${test.id}/edit`} className="btn btn-success btn-sm">
             <FaPen />
           </ Link>
-          <Link to="#" className="btn btn-danger btn-sm ml-1" onClick={() => handleDestroy(race)}>
+          <Link to="#" className="btn btn-danger btn-sm ml-1" onClick={() => handleDestroy(test)}>
             <FaTrash />
           </Link>
           </td>
@@ -82,10 +82,10 @@ const loadBody = () =>{
               <Card.Header className="bg-dark text-white">
                 <Card.Title className="mt-3">
                   <FaRunning className="mr-2" />
-                  Lista de Corridas
-                  <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right" >
+                  Lista de Provas
+                  <Link to="/tests/new" className="btn btn-outline-primary btn-sm float-right" >
                     <FaPlus className="mr-2"/>
-                    Nova Corrida
+                    Nova Prova
                   </Link>
                 </Card.Title>
               </Card.Header>
@@ -94,9 +94,8 @@ const loadBody = () =>{
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Local</th>
-                      <th>Descrição</th>
-                      <th>Data da Corrida</th>
+                      <th>Corrida</th>
+                      <th>Modalidade</th>
                       <th>Options</th>
                     </tr>
                   </thead>
@@ -107,7 +106,7 @@ const loadBody = () =>{
                 </Card.Body>
               <Card.Footer>
                 <p className="float-right m-0">
-                  Mostrando total de {total_race} Corrida(s)
+                  Mostrando total de {total_test} Corrida(s)
                 </p>
                 <Button disabled={page === 1}
                   variant={page === 1 ? "secondary" : "primary"}
@@ -131,4 +130,4 @@ const loadBody = () =>{
     );
   }
 
-  export default Race;
+  export default Test;
