@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import TypeForm from './TypeForm';
+import Header from './../../components/Header/Header';
+import {getCurrentUser} from './../../services/auth';
 
  const TypeNew = (props) => {
 
     return (
-      <Container>
-      <Row className="justify-content-center mb-3">
-        <Col lg="10">
-          <TypeForm match={props.match} history={props.history}/>
-        </Col>
-      </Row>
-      </Container>
+      <Fragment>
+        <Header user={getCurrentUser()}/>
+        <Container>
+        <Row className="justify-content-center mb-3">
+          <Col lg="10">
+            <TypeForm match={props.match} history={props.history}/>
+          </Col>
+        </Row>
+        </Container>
+      </Fragment>
     );
   }
   export default TypeNew;

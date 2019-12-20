@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import {Form,  Button, Card, Col,Row} from 'react-bootstrap';
+import {Form,  Button, Card, Col,Row, Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
@@ -11,6 +11,8 @@ const TypeForm = (props) => {
     oar: '',
   });
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [show, setShow] = useState(false);
 
   useEffect(() =>{
     if(props.match.params.id){
@@ -33,7 +35,9 @@ const TypeForm = (props) => {
     await api[method](url, {
       type_test: type_test
     }).then(response => {
-      props.history.push('/type_tests');
+      setMessage(type_test.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
+      setErrors({});
+      setShow(true);
     }).catch(error => {
       setErrors(error.response.data);
     });
@@ -49,6 +53,11 @@ const TypeForm = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
+              { message && show ?
+                <Alert key={message} className="text-center" variant="success" onClose={() => setShow(false)}dismissible >
+                  {message}
+                </Alert> : ""
+              }
               <Form>
                 <Form.Group as={Row}>
                   <Form.Label  column sm={2}>Gênero</Form.Label>

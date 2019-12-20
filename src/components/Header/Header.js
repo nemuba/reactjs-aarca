@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Nav} from "react-bootstrap";
 import { FaAcquisitionsIncorporated } from "react-icons/fa";
+import {isAuthenticated} from './../../services/auth';
 
 const Header = (props) => {
 
@@ -22,7 +23,11 @@ const Header = (props) => {
           <Nav.Link href="/tests" >
             Provas
           </Nav.Link>
-        </Nav>
+         </Nav>
+      <Nav>
+        {props.user ? <Nav.Link href="/user_details">{props.user}</Nav.Link> :""}
+        { isAuthenticated() ? <Nav.Link href="/logout">Logout</Nav.Link> : ""}
+      </Nav>
       </Navbar.Collapse>
     </Navbar>
   );

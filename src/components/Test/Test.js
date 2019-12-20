@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import {Container, Row, Col, Card, Button, Table} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
+import Header from  './../../components/Header/Header';
+import {getCurrentUser} from './../../services/auth';
 import {FaArrowLeft, FaArrowRight, FaPlus, FaPen, FaTrash, FaRunning} from 'react-icons/fa';
 
 const Test = (props) => {
@@ -49,7 +51,6 @@ const handleDestroy = async (test) =>{
     // remove to total de item
     setTotalTest(total_test - 1);
 
-
     setPage(1);
 
   }
@@ -58,7 +59,7 @@ const handleDestroy = async (test) =>{
 const loadBody = () =>{
   return tests.map((test, index )=>{
       return (<tr key={index}>
-        <td>{test.id}</td>
+        <td align="center">{test.id}</td>
         <td>{test.race}</td>
         <td>{test.type_test}</td>
         <td>
@@ -75,9 +76,11 @@ const loadBody = () =>{
 
 
     return(
+      <Fragment>
+        <Header user={getCurrentUser()}/>
       <Container>
         <Row className="justify-content-center mb-3">
-          <Col lg={12}>
+          <Col lg={10}>
             <Card className="mt-3">
               <Card.Header className="bg-dark text-white">
                 <Card.Title className="mt-3">
@@ -90,7 +93,7 @@ const loadBody = () =>{
                 </Card.Title>
               </Card.Header>
               <Card.Body >
-                  <Table hover striped bordered>
+                  <Table hover striped bordered responsive size="sm">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -109,24 +112,23 @@ const loadBody = () =>{
                   Mostrando total de {total_test} Corrida(s)
                 </p>
                 <Button disabled={page === 1}
-                  variant={page === 1 ? "secondary" : "primary"}
+                  variant={page === 1 ? "secondary" : "dark"}
                   onClick={prevPage}
                   className = "float-left mr-2" >
-                  <FaArrowLeft className="mr-2"/>
-                  Anterior
+                  <FaArrowLeft />
                 </Button>
                 <Button  disabled={!disable}
                   onClick={nextPage}
-                  variant={!disable ? "secondary" : "primary"}
+                  variant={!disable ? "secondary" : "dark"}
                   className="float-left mr-2">
-                    Próximo
-                    <FaArrowRight className="ml-2" />
+                    <FaArrowRight  />
                 </Button>
               </Card.Footer>
             </Card>
           </Col>
         </Row>
       </Container>
+      </Fragment>
     );
   }
 

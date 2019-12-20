@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {Container, Row, Col, Card, Button, Table} from 'react-bootstrap';
+import React, { useState, useEffect, Fragment } from 'react';
+import {Container, Row, Col, Card, Button, Table, Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
+import Header from './../../components/Header/Header';
+import {getCurrentUser} from './../../services/auth';
 import {FaArrowLeft, FaArrowRight, FaPlus, FaPen, FaTrash, FaRunning} from 'react-icons/fa';
 
 const Race = (props) => {
@@ -10,6 +12,8 @@ const [races, setRaces] = useState([]);
 const [page, setPage] = useState(1);
 const [disable,setDisable] = useState(false);
 const [total_race, setTotalRace] = useState(0);
+const [erro, setErro] = useState('');
+const [show, setShow] = useState(false);
 
 useEffect(()=>{
   api.get('/races').then(response => {
@@ -42,14 +46,15 @@ const handleDestroy = async (race) =>{
   if(window.confirm(`Deseja Excluir: ${race.local}?`)){
     // apaga a corrida no banco
     await api.delete(`/races/${race.id}`, { method: 'DELETE' }).then(response =>{
-       // remove a corrida da lista
-       setRaces(races.filter((item) => item !== race));
-       // remove to total de item
-       setTotalRace(total_race - 1);
+      // remove a corrida da lista
+      setRaces(races.filter((item) => item !== race));
+      // remove to total de item
+      setTotalRace(total_race - 1);
 
-       setPage(1);
+      setPage(1);
     }).catch(error => {
-      alert("A corrida está associada a uma prova e não pode ser deletada !");
+      setErro('Corrida não pode ser deletada !');
+      setShow(true);
     });
   }
 }
@@ -57,10 +62,10 @@ const handleDestroy = async (race) =>{
 const loadBody = () =>{
   return races.map((race, index )=>{
       return (<tr key={index}>
-        <td>{race.id}</td>
+        <td align="center">{race.id}</td>
         <td>{race.local}</td>
         <td>{race.description.substr(0,20)} ...</td>
-        <td>{race.date_race}</td>
+        <td align="center">{race.date_race}</td>
         <td>
           <Link to={`/races/${race.id}/edit`} className="btn btn-success btn-sm">
             <FaPen />
@@ -75,59 +80,65 @@ const loadBody = () =>{
 
 
     return(
-      <Container>
-        <Row className="justify-content-center mb-3">
-          <Col lg={12}>
-            <Card className="mt-3">
-              <Card.Header className="bg-dark text-white">
-                <Card.Title className="mt-3">
-                  <FaRunning className="mr-2" />
-                  Lista de Corridas
-                  <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right" >
-                    <FaPlus className="mr-2"/>
-                    Nova Corrida
-                  </Link>
-                </Card.Title>
-              </Card.Header>
-              <Card.Body >
-                  <Table hover striped bordered>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Local</th>
-                      <th>Descrição</th>
-                      <th>Data da Corrida</th>
-                      <th>Options</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {loadBody()}
-                  </tbody>
-                </Table>
-                </Card.Body>
-              <Card.Footer>
-                <p className="float-right m-0">
-                  Mostrando total de {total_race} Corrida(s)
-                </p>
-                <Button disabled={page === 1}
-                  variant={page === 1 ? "secondary" : "primary"}
-                  onClick={prevPage}
-                  className = "float-left mr-2" >
-                  <FaArrowLeft className="mr-2"/>
-                  Anterior
-                </Button>
-                <Button  disabled={!disable}
-                  onClick={nextPage}
-                  variant={!disable ? "secondary" : "primary"}
-                  className="float-left mr-2">
-                    Próximo
-                    <FaArrowRight className="ml-2" />
-                </Button>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <Fragment>
+        <Header user={getCurrentUser()}/>
+        <Container>
+          <Row className="justify-content-center mb-3">
+            <Col lg={10}>
+              <Card className="mt-3">
+                <Card.Header className="bg-dark text-white">
+                  <Card.Title className="mt-3">
+                    <FaRunning className="mr-2" />
+                    Lista de Corridas
+                    <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right" >
+                      <FaPlus className="mr-2"/>
+                      Nova Corrida
+                    </Link>
+                  </Card.Title>
+                </Card.Header>
+                <Card.Body >
+                    {erro && show ?
+                      <Alert key={erro} className="text-center" variant="danger" onClose={() => setShow(false)}dismissible >
+                        {erro}
+                      </Alert> : ""
+                     }
+                    <Table hover striped bordered responsive size="sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Local</th>
+                        <th>Descrição</th>
+                        <th>Data da Corrida</th>
+                        <th>Options</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {loadBody()}
+                    </tbody>
+                  </Table>
+                  </Card.Body>
+                <Card.Footer>
+                  <p className="float-right m-0">
+                    Mostrando total de {total_race} Corrida(s)
+                  </p>
+                  <Button disabled={page === 1}
+                    variant={page === 1 ? "secondary" : "dark"}
+                    onClick={prevPage}
+                    className = "float-left mr-2" >
+                    <FaArrowLeft />
+                  </Button>
+                  <Button  disabled={!disable}
+                    onClick={nextPage}
+                    variant={!disable ? "secondary" : "dark"}
+                    className="float-left mr-2">
+                      <FaArrowRight  />
+                  </Button>
+                </Card.Footer>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </Fragment>
     );
   }
 

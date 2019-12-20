@@ -1,6 +1,8 @@
-import React,{useState, useEffect} from 'react';
-import { Container, Row, Col, Card, Table, Button } from 'react-bootstrap';
+import React,{useState, useEffect,Fragment} from 'react';
+import { Container, Row, Col, Card, Table, Button, Alert } from 'react-bootstrap';
 import api from './../../services/api';
+import Header from './../../components/Header/Header';
+import {getCurrentUser} from './../../services/auth';
 import { FaList, FaPlus, FaTrash, FaPen, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 
@@ -10,6 +12,8 @@ const TypeTest = (props) => {
   const [page, setPage] = useState(1);
   const [disable, setDisable] = useState(false);
   const [total_type, setTotalType] = useState(0);
+  const [erro, setErro] = useState('');
+  const [show, setShow] = useState(false);
 
   useEffect(()=>{
     api.get('/type_tests').then(response => {
@@ -50,7 +54,8 @@ const TypeTest = (props) => {
 
        setPage(1);
     }).catch(error => {
-      alert("A corrida está associada a uma prova e não pode ser deletada !");
+      setErro("Erro ao deletar !");
+      setShow(true);
     });
     }
   }
@@ -60,7 +65,7 @@ const TypeTest = (props) => {
       type_tests.map(type =>{
         return (
         <tr key={type.id}>
-          <td>{type.id}</td>
+          <td align="center">{type.id}</td>
           <td>{type.genre}</td>
           <td>{type.oar} remo(s)</td>
           <td>
@@ -79,58 +84,65 @@ const TypeTest = (props) => {
   }
 
   return(
-  <Container>
-    <Row className="justify-content-center mt-3">
-      <Col sm={12}>
-        <Card>
-          <Card.Header className="bg-dark text-white">
-            <Card.Title className="mt-3">
-              <FaList className="mr-3"/>
-              Lista de tipos de Provas
-              <Link to="/type_tests/new" className="btn btn-outline-primary btn-sm float-right" >
-                    <FaPlus className="mr-2"/>
-                    Novo Tipo de Corrida
-                  </Link>
-            </Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Table hover striped bordered>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Gênero</th>
-                  <th>Número de Remo(s)</th>
-                  <th>Opções</th>
-                </tr>
-              </thead>
-              <tbody>
-                {renderBody()}
-              </tbody>
-            </Table>
-          </Card.Body>
-          <Card.Footer>
-            <p className="float-right m-0">
-              Mostrando total de {total_type} Corrida(s)
-            </p>
-                <Button disabled={page === 1}
-                  variant={page === 1 ? "secondary" : "primary"}
-                  onClick={prevPage}
-                  className = "float-left mr-2" >
-                  <FaArrowLeft className="mr-2"/>
-                  Anterior
-                </Button>
-                <Button  disabled={!disable}
-                  onClick={nextPage}
-                  variant={!disable ? "secondary" : "primary"}
-                  className="float-left mr-2">
-                    Próximo
-                    <FaArrowRight className="ml-2" />
-                </Button>
-          </Card.Footer>
-        </Card>
-      </Col>
-    </Row>
-  </Container>);
+    <Fragment>
+      <Header user={getCurrentUser()}/>
+      <Container>
+        <Row className="justify-content-center mt-3">
+          <Col sm={10}>
+            <Card>
+              <Card.Header className="bg-dark text-white">
+                <Card.Title className="mt-3">
+                  <FaList className="mr-3"/>
+                  Lista de tipos de Provas
+                  <Link to="/type_tests/new" className="btn btn-outline-primary btn-sm float-right" >
+                        <FaPlus className="mr-2"/>
+                        Novo Tipo de Corrida
+                      </Link>
+                </Card.Title>
+              </Card.Header>
+              <Card.Body>
+                {erro && show ?
+                  <Alert key={erro} className="text-center" variant="danger" onClose={() => setShow(false)}dismissible >
+                    {erro}
+                  </Alert> : ""
+                }
+                <Table hover striped bordered responsive size="sm">
+                  <thead>
+                    <tr>
+                      <th className="text-center">#</th>
+                      <th>Gênero</th>
+                      <th>Número de Remo(s)</th>
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {renderBody()}
+                  </tbody>
+                </Table>
+              </Card.Body>
+              <Card.Footer>
+                <p className="float-right m-0">
+                  Mostrando total de {total_type} Corrida(s)
+                </p>
+                    <Button disabled={page === 1}
+                      variant={page === 1 ? "secondary" : "dark"}
+                      onClick={prevPage}
+                      className = "float-left mr-2" >
+                      <FaArrowLeft />
+                    </Button>
+                    <Button  disabled={!disable}
+                      onClick={nextPage}
+                      variant={!disable ? "secondary" : "dark"}
+                      className="float-left mr-2">
+                        <FaArrowRight />
+                    </Button>
+              </Card.Footer>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+  </Fragment>
+  );
 
 }
 

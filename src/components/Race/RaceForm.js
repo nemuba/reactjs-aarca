@@ -1,8 +1,9 @@
 import React,{useState, useEffect} from 'react';
-import {Form,  Button, Card, Col,Row} from 'react-bootstrap';
+import {Form,  Button, Card, Col,Row, Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
+
 // import { Container } from './styles';
 
 const RaceForm = (props) => {
@@ -12,6 +13,8 @@ const RaceForm = (props) => {
     date_race: ''
   });
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [show, setShow] = useState(false);
 
   useEffect(() =>{
     if(props.match.params.id){
@@ -20,6 +23,10 @@ const RaceForm = (props) => {
       });
     }
   },[props.match.params.id]);
+
+  useEffect(()=>{
+    console.log(errors);
+  },[errors]);
 
   const onChangeText = (e) => {
     setRace({...race ,[e.target.id]: e.target.value});
@@ -34,7 +41,9 @@ const RaceForm = (props) => {
     await api[method](url, {
       race: race
     }).then(response => {
-      props.history.push('/races');
+      setMessage(race.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
+      setErrors({});
+      setShow(true);
     }).catch(error => {
       setErrors(error.response.data);
     });
@@ -50,6 +59,11 @@ const RaceForm = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
+              { message && show ?
+                <Alert key={message} className="text-center" variant="success" onClose={() => setShow(false)}dismissible >
+                  {message}
+                </Alert> : ""
+              }
               <Form>
                 <Form.Group as={Row}>
                   <Form.Label  column sm={2}>Local</Form.Label>
@@ -60,7 +74,7 @@ const RaceForm = (props) => {
                       onChange={onChangeText}
                       autoFocus={true}
                       />
-                     <Form.Text style={{color: "red"}}>{errors ? errors.local : ''} </Form.Text>
+                     <Form.Text style={{color: "red"}}>{errors.local ? [...errors.local] : ''} </Form.Text>
                   </Col>
                 </Form.Group>
                 <Form.Group >
@@ -69,7 +83,7 @@ const RaceForm = (props) => {
                       value={race.description}
                       rows="5"
                       onChange={onChangeText} />
-                       <Form.Text style={{color: "red"}}>{errors ? errors.description : ''} </Form.Text>
+                       <Form.Text style={{color: "red"}}>{errors.description ? [...errors.description] : ''} </Form.Text>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
                   <Form.Label column sm={2} >Data da Corrida</Form.Label>
@@ -77,7 +91,7 @@ const RaceForm = (props) => {
                       <Form.Control type="date" id="date_race"
                         value={race.date_race}
                         onChange={onChangeText}/>
-                         <Form.Text style={{color: "red"}}>{errors ? errors.date_race : ''} </Form.Text>
+                         <Form.Text style={{color: "red"}}>{errors.date_race ? [...errors.date_race] : ''} </Form.Text>
                     </Col>
                 </Form.Group>
                 <Link to="/races" className="btn btn-danger mr-2">Voltar</Link>

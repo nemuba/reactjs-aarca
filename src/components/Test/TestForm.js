@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, Alert } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
@@ -13,7 +13,8 @@ const TestForm = (props) => {
   const [type_tests, setTypeTests] = useState([]);
 
   const [errors, setErrors] = useState({});
-
+  const [message, setMessage] = useState("");
+  const [show, setShow] = useState(false);
 
 useEffect(() => {
   if (props.match.params.id) {
@@ -43,7 +44,9 @@ useEffect(() => {
     await api[method](url, {
       test: test
     }).then(response => {
-      props.history.push('/tests');
+      setMessage(test.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
+      setErrors({});
+      setShow(true);
     }).catch(error => {
       setErrors(error.response.data);
     });
@@ -59,6 +62,11 @@ useEffect(() => {
           {test.id ? "Atualizar Prova" : "Cadastrar Prova"}</Card.Title>
       </Card.Header>
       <Card.Body>
+        { message && show ?
+            <Alert key={message} className="text-center" variant="success" onClose={() => setShow(false)}dismissible >
+              {message}
+            </Alert> : ""
+        }
         <Form>
           <Form.Group>
             <Form.Label>Corridas</Form.Label>

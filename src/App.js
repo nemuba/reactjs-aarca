@@ -1,16 +1,7 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import Header from './components/Header/Header';
 import Router from './routes';
+import 'bootstrap/dist/css/bootstrap.css';
 
-
-const App = () => {
-  return (
-    <div className="App">
-      <Header />
-      <Router />
-    </div>
-  );
-}
+const App = (props) =>  <Router /> ;
 
 export default App;

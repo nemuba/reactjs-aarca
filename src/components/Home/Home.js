@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Jumbotron,  Container } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import Header from './../Header/Header';
+import api from './../../services/api';
+import {setCurrentUser, setCurrentUserId, getCurrentUser, logout} from './../../services/auth';
 // import { Container } from './styles';
 
 const Home = (props) => {
 
-  console.log(window.location.pathname);
+  const [user, setUser] = useState("")
+
+  useEffect(() => {
+    api.get('/get_user')
+      .then(response => {
+        setCurrentUser(response.data.user.email);
+        setCurrentUserId(response.data.user.id);
+        setUser(getCurrentUser());
+      }).catch(error => {
+        logout();
+        props.history.push('/login_in');
+      });
+  }, [props.history])
+
   return(
+    <Fragment>
+      <Header user={user}/>
     <Container>
       <Jumbotron className="mt-3">
         <h1>Bem, Vindo</h1>
@@ -19,6 +37,7 @@ const Home = (props) => {
         </p>
       </Jumbotron>
     </Container>
+    </Fragment>
   )
 };
 
