@@ -53,7 +53,8 @@ const UserInfo = (props) => {
         </Col>
         <Col lg="6" sm="6" >
           <Card style={{marginTop: '30px'}}>
-            <Card.Header><h4>Informações do usuário</h4></Card.Header>
+            <Card.Header className="bg-dark text-white">
+              <h4 className="mt-1">Informações do usuário</h4></Card.Header>
               <Card.Body>
                 {message && show ?
                 <Alert key={message} className="text-center" variant="danger" onClose={() => setShow(false)}dismissible >
