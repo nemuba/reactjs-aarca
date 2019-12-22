@@ -1,20 +1,18 @@
 import React, { Fragment, useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { FaAcquisitionsIncorporated } from 'react-icons/fa';
 import Header from './../Header/Header';
 import { getCurrentUser, getCurrentUserId} from './../../services/auth';
-import { FaAcquisitionsIncorporated } from 'react-icons/fa';
 import api from "./../../services/api";
 
 const UserInfo = (props) => {
+
   const [user, setUser] = useState({email: getCurrentUser(), password:''})
   const [message, setMessage] = useState("");
   const [show, setShow] = useState(false);
 
-
-
   const onChangeText = (e) => {
     setUser({...user ,[e.target.id]: e.target.value});
-    console.table(user)
   };
 
   const handleSubmit = async (e) =>{

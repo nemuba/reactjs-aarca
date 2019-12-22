@@ -18,7 +18,7 @@ const Home = (props) => {
         setUser(getCurrentUser());
       }).catch(error => {
         logout();
-        props.history.push('/login_in');
+        props.history.push('/logn_in');
       });
   }, [props.history])
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import {isAuthenticated} from './services/auth';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute/index';
+// componets
 import TypeTest from './components/TypeTest/TypeTest';
 import TypeEdit from './components/TypeTest/TypeEdit';
 import TypeNew from './components/TypeTest/TypeNew';
@@ -17,38 +18,32 @@ import NotFound from './components/pages/NotFound';
 import Home from './components/Home/Home';
 import UserInfo from './components/User';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      isAuthenticated() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{ pathname: "/sign_in", state: { from: props.location } }} />
-      )
-    }
-  />
-);
-
 const Routes =(props)=>{
 
     return(
       <Router>
         <Switch>
+          {/* Route root */}
           <PrivateRoute path="/" exact component={Home} />
+          {/* Race routes */}
           <PrivateRoute path="/races" exact component={Race} />
           <PrivateRoute path="/races/new" exact component={RaceNew} />
           <PrivateRoute path="/races/:id/edit" exact component={RaceEdit} />
+          {/* Type test routes */}
           <PrivateRoute path="/type_tests" exact component={TypeTest} />
           <PrivateRoute path="/type_tests/new" exact component={TypeNew} />
           <PrivateRoute path="/type_tests/:id/edit" exact component={TypeEdit} />
+          {/* Tests routes */}
           <PrivateRoute path="/tests" exact component={Test} />
           <PrivateRoute path="/tests/new" exact component={TestNew} />
           <PrivateRoute path="/tests/:id/edit" exact component={TestEdit} />
+          {/* Authenticate routes */}
           <Route path="/sign_in" exact component={SignIn}/>
           <Route path="/sign_up" exact component={SignUp}/>
           <Route path="/logout" exact component={Logout}/>
+          {/* User route */}
           <PrivateRoute path="/user_details" exact component={UserInfo}/>
+          {/* Page not found route */}
           <Route path="*" component={NotFound} />
         </Switch>
       </Router>

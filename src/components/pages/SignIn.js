@@ -48,7 +48,7 @@ const SignIn = (props) => {
         <Card  className="mb-5"
           style={{margin: "0 auto", top: "80px", boxShadow: "0 2em 1em -0.7em"}}>
           <Card.Header className="bg-dark text-white text-center font-weight-bold">
-            <FaUserLock />
+            <FaUserLock size={32}/>
             <Card.Title className="mt-2">
               Login
             </Card.Title>

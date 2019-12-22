@@ -1,17 +1,22 @@
 import React, {useState} from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import api from '../../services/api';
 import {Link, Redirect} from 'react-router-dom';
-import {getToken} from './../../services/auth';
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
+import {getToken} from './../../services/auth';
+import api from '../../services/api';
 
 const SignUp = (props) => {
   //show alert
   const [show, setShow] = useState(true);
   // erro de login
   const [erro, setErro] = useState('');
-  const [user, setUser] = useState({email: '', password: ''});
-
+  // user
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    password_confirmation :''
+  });
+  // function set value in attributes of the model user
   const onChangeText = (e) =>{
     setUser({...user,[e.target.id]: e.target.value});
   }
@@ -21,7 +26,7 @@ const SignUp = (props) => {
     const {email, password, password_confirmation} = user;
 
     if(!email || !password || !password_confirmation){
-      setErro("Preencha todos os campos !");
+      setErro({validation: "Preencha todos os campos"});
       setShow(true);
       return;
     }else{
@@ -29,16 +34,15 @@ const SignUp = (props) => {
       .then(res => {
         props.history.push('/sign_in');
       }).catch(error => {
-        setErro("Não foi possivel criar usário");
+        setErro('Usuário ou senha inválidos !');
         setShow(true);
-        setUser({email: '', password:'',password_confirmation: ''});
       });
     }
   }
 
   // se usuário estiver logado redirecionar para Home
   if (getToken()) {
-    return <Redirect to = "/" / >
+    return <Redirect to = "/" />;
       // senão renderizar login
   } else {
 
@@ -49,7 +53,7 @@ const SignUp = (props) => {
         <Card className="mb-3"
         style={{margin: "0 auto", top: "60px", boxShadow: "0 2em 1em -0.7em"}}>
           <Card.Header className="bg-dark text-white text-center font-weight-bold">
-            <FaUserCircle className="mr-2" />
+            <FaUserCircle className="mr-2" size={32}/>
             <Card.Title className="mt-2">
               Criar Conta
             </Card.Title>
