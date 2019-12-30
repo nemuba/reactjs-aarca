@@ -8,7 +8,7 @@ import {setCurrentUser, setCurrentUserId, getCurrentUser, logout} from './../../
 
 const Home = (props) => {
 
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     api.get('/get_user')

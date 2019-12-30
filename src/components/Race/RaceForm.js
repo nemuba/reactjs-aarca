@@ -1,32 +1,31 @@
 import React,{useState, useEffect} from 'react';
-import {Form,  Button, Card, Col,Row, Alert} from 'react-bootstrap';
+import {Form,  Button, Card, Col,Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import { Container } from './styles';
-
 const RaceForm = (props) => {
+
+  const notify = (msg) => toast(`${msg}`);
+
   const [race, setRace] = useState({
     local: '',
     description: '',
     date_race: ''
   });
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
-  const [show, setShow] = useState(false);
 
   useEffect(() =>{
     if(props.match.params.id){
-      api.get(`/races/${props.match.params.id}`).then(response => {
+      api.get(`/races/${props.match.params.id}`)
+      .then(response => {
         setRace(response.data);
       });
     }
   },[props.match.params.id]);
-
-  useEffect(()=>{
-    console.log(errors);
-  },[errors]);
 
   const onChangeText = (e) => {
     setRace({...race ,[e.target.id]: e.target.value});
@@ -38,19 +37,24 @@ const RaceForm = (props) => {
     let method = race.id ? 'patch' : 'post';
     let url = race.id ? `/races/${race.id}` : '/races';
 
+    if (race.local !== '' && race.description !== '' && race.date_race !== '') {
     await api[method](url, {
       race: race
     }).then(response => {
-      setMessage(race.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
       setErrors({});
-      setShow(true);
+      setRace(response.data);
+      notify(race.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
     }).catch(error => {
-      setErrors(error.response.data);
+      setErrors(error.reponse.data);
     });
+  }else{
+    notify("Preencha todos campos !");
+  }
   }
 
   return(
         <Card className="mt-3">
+            <ToastContainer />
             <Card.Header
             className={ (errors.local || errors.description || errors.date_race) ? "bg-danger text-white" :"bg-dark text-white"}>
               <Card.Title className="mt-2" >
@@ -59,11 +63,6 @@ const RaceForm = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              { message && show ?
-                <Alert key={message} className="text-center" variant="success" onClose={() => setShow(false)}dismissible >
-                  {message}
-                </Alert> : ""
-              }
               <Form>
                 <Form.Group as={Row}>
                   <Form.Label  column sm={2}>Local</Form.Label>

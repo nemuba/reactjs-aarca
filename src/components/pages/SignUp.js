@@ -16,6 +16,7 @@ const SignUp = (props) => {
     password: '',
     password_confirmation :''
   });
+
   // function set value in attributes of the model user
   const onChangeText = (e) =>{
     setUser({...user,[e.target.id]: e.target.value});
