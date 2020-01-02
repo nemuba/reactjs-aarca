@@ -1,18 +1,18 @@
 import React,{useState, useEffect} from 'react';
-import {Form,  Button, Card, Col,Row, Alert} from 'react-bootstrap';
+import {Form,  Button, Card, Col,Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
-// import { Container } from './styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TypeForm = (props) => {
+
   const [type_test, setTypeTest] = useState({
     genre: '',
     oar: '',
   });
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
-  const [show, setShow] = useState(false);
 
   useEffect(() =>{
     if(props.match.params.id){
@@ -21,6 +21,8 @@ const TypeForm = (props) => {
       });
     }
   },[props.match.params.id]);
+
+  const notify = (msg) => toast(`${msg}`, { autoClose: 2000 });
 
   const onChangeText = (e) => {
     setTypeTest({...type_test ,[e.target.id]: e.target.value});
@@ -35,16 +37,25 @@ const TypeForm = (props) => {
     await api[method](url, {
       type_test: type_test
     }).then(response => {
-      setMessage(type_test.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
       setErrors({});
-      setShow(true);
+      notify(type_test.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
     }).catch(error => {
       setErrors(error.response.data);
+      notify("Preencha todos o campos!");
+    }).finally(()=>{
+      if (errors !== null){
+        return;
+      }else{
+        setTimeout(() => {
+          props.history.push('/type_tests');
+        }, 2000);
+      }
     });
   }
 
   return(
         <Card className="mt-3">
+          <ToastContainer />
             <Card.Header
             className={ (errors.genre || errors.oar) ? "bg-danger text-white" :"bg-dark text-white"}>
               <Card.Title className="mt-2" >
@@ -53,11 +64,6 @@ const TypeForm = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              { message && show ?
-                <Alert key={message} className="text-center" variant="success" onClose={() => setShow(false)}dismissible >
-                  {message}
-                </Alert> : ""
-              }
               <Form>
                 <Form.Group as={Row}>
                   <Form.Label  column sm={2}>Gênero</Form.Label>

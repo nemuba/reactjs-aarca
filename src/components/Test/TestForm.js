@@ -1,9 +1,10 @@
 import React,{useState, useEffect} from 'react';
-import { Card, Form, Button, Alert } from 'react-bootstrap';
+import { Card, Form, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
-// import { Container } from './styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TestForm = (props) => {
 
@@ -13,8 +14,8 @@ const TestForm = (props) => {
   const [type_tests, setTypeTests] = useState([]);
 
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
-  const [show, setShow] = useState(false);
+
+  const notify = (msg) => toast(`${msg}`,{autoClose: 2000});
 
 useEffect(() => {
   if (props.match.params.id) {
@@ -38,22 +39,32 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     let method = test.id ? 'patch' : 'post';
     let url = test.id ? `/tests/${test.id}` : '/tests';
 
     await api[method](url, {
       test: test
     }).then(response => {
-      setMessage(test.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
+      notify(test.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
       setErrors({});
-      setShow(true);
     }).catch(error => {
       setErrors(error.response.data);
+      notify("Preencha todos os campos !");
+    }).finally(()=>{
+      if(errors !== null){
+        return;
+      }else{
+        setTimeout(() => {
+          props.history.push('/tests');
+        }, 2000);
+      }
     });
   }
 
   return(
     <Card className="mt-3">
+      <ToastContainer />
       <Card.Header className = {
         (errors.race || errors.type_test ) ? "bg-danger text-white" : "bg-dark text-white"
       }>
@@ -62,11 +73,6 @@ useEffect(() => {
           {test.id ? "Atualizar Prova" : "Cadastrar Prova"}</Card.Title>
       </Card.Header>
       <Card.Body>
-        { message && show ?
-            <Alert key={message} className="text-center" variant="success" onClose={() => setShow(false)}dismissible >
-              {message}
-            </Alert> : ""
-        }
         <Form>
           <Form.Group>
             <Form.Label>Corridas</Form.Label>

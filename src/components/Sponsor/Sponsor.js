@@ -3,7 +3,7 @@ import { Container, Card, Row, Col, Table, Alert, Button } from 'react-bootstrap
 import Header from './../Header/Header';
 import {getCurrentUser} from './../../services/auth';
 import api from './../../services/api';
-import { FaRunning, FaPlus, FaPen, FaTrash, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import { FaPlus, FaPen, FaTrash, FaArrowRight, FaArrowLeft, FaMoneyBill } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Sponsor = (props) =>{
@@ -94,9 +94,9 @@ const nextPage = () => {
         <Card className="mt-3">
         <Card.Header className="bg-dark text-white">
           <Card.Title className="mt-3">
-            <FaRunning className="mr-2" />
+            <FaMoneyBill className="mr-2" />
             Lista de Patrocinadores
-            <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right" >
+            <Link to="/sponsors/new" className="btn btn-outline-primary btn-sm float-right" >
               <FaPlus className="mr-2"/>
               Novo Patrocinador
             </Link>
@@ -123,7 +123,7 @@ const nextPage = () => {
         </Card.Body>
         <Card.Footer>
           <p className="float-right m-0">
-            Mostrando total de {total_sponsor} Corrida(s)
+            Mostrando total de {total_sponsor} Patrocinador(es)
           </p>
           <Button disabled={page === 1}
             variant={page === 1 ? "secondary" : "dark"}

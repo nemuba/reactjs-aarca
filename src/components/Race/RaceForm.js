@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { Container } from './styles';
 const RaceForm = (props) => {
 
-  const notify = (msg) => toast(`${msg}`);
+  const notify = (msg) => toast(`${msg}`,{autoClose: 2000});
 
   const [race, setRace] = useState({
     local: '',
@@ -37,19 +37,24 @@ const RaceForm = (props) => {
     let method = race.id ? 'patch' : 'post';
     let url = race.id ? `/races/${race.id}` : '/races';
 
-    if (race.local !== '' && race.description !== '' && race.date_race !== '') {
     await api[method](url, {
       race: race
     }).then(response => {
-      setErrors({});
       setRace(response.data);
       notify(race.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
     }).catch(error => {
-      setErrors(error.reponse.data);
+      setErrors(error.response.data);
+      notify("Preencha todos campos !");
+    }).finally(() =>{
+      if(errors !== null){
+        return;
+      }else{
+        setTimeout(() => {
+          props.history.push('/races')
+        }, 2000);
+      }
     });
-  }else{
-    notify("Preencha todos campos !");
-  }
+
   }
 
   return(
