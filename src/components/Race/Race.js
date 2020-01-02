@@ -39,7 +39,7 @@ const prevPage = async () =>{
   setPage(page-1);
 }
 const nextPage =  () => {
-  setPage(disable ? page+1 : page);
+  setPage(disable ? (page + 1) : page);
 }
 
 const handleDestroy = async (race) =>{

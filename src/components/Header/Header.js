@@ -23,6 +23,9 @@ const Header = (props) => {
           <Nav.Link href="/tests" >
             Provas
           </Nav.Link>
+          <Nav.Link href="/sponsors" >
+            Patrocinadores
+          </Nav.Link>
          </Nav>
       <Nav>
         {props.user ? <Nav.Link href="/user_details">{props.user}</Nav.Link> :""}

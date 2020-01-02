@@ -11,6 +11,7 @@ import RaceEdit from './components/Race/RaceEdit';
 import Test from './components/Test/Test';
 import TestNew from './components/Test/TestNew';
 import TestEdit from './components/Test/TestEdit';
+import Sponsor from './components/Sponsor/Sponsor';
 import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
 import Logout from './components/pages/Logout';
@@ -37,6 +38,10 @@ const Routes =(props)=>{
           <PrivateRoute path="/tests" exact component={Test} />
           <PrivateRoute path="/tests/new" exact component={TestNew} />
           <PrivateRoute path="/tests/:id/edit" exact component={TestEdit} />
+          {/* Sponsors routes */}
+          <PrivateRoute path="/sponsors" exact component={Sponsor} />
+          <PrivateRoute path="/sponsors/new" exact component={Sponsor} />
+          <PrivateRoute path="/sponsors/:id/edit" exact component={Sponsor} />
           {/* Authenticate routes */}
           <Route path="/sign_in" exact component={SignIn}/>
           <Route path="/sign_up" exact component={SignUp}/>
