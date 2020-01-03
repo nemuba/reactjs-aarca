@@ -88,7 +88,7 @@ const TypeTest = (props) => {
       <Header user={getCurrentUser()}/>
       <Container>
         <Row className="justify-content-center mt-3">
-          <Col sm={10}>
+          <Col sm={6} lg={10}>
             <Card>
               <Card.Header className="bg-dark text-white">
                 <Card.Title className="mt-3">

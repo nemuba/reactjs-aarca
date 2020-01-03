@@ -90,7 +90,7 @@ const nextPage = () => {
       <Header user={getCurrentUser()}/>
     <Container>
     <Row className="justify-content-center">
-      <Col sm={12} lg={10}>
+      <Col sm={6} lg={10}>
         <Card className="mt-3">
         <Card.Header className="bg-dark text-white">
           <Card.Title className="mt-3">

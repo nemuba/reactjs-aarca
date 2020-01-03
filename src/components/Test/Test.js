@@ -80,7 +80,7 @@ const loadBody = () =>{
         <Header user={getCurrentUser()}/>
       <Container>
         <Row className="justify-content-center mb-3">
-          <Col lg={10}>
+          <Col lg={10} sm={6}>
             <Card className="mt-3">
               <Card.Header className="bg-dark text-white">
                 <Card.Title className="mt-3">
