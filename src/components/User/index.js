@@ -38,7 +38,7 @@ const UserInfo = (props) => {
       <Container>
       <Row className="justify-content-center">
         <Col lg="6" sm="4" >
-          <Card style={{width: 400,marginTop: '30px',marginRight: 10}}>
+          <Card style={{maxWidth: '400px',marginTop: '30px',marginRight: '10px'}}>
             <Card.Header className="text-center bg-dark text-white">
               <FaAcquisitionsIncorporated size={64} className="float-left"/>
               <h2 className="float-left mt-3">AARCA</h2>
