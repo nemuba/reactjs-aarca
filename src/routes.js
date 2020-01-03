@@ -18,6 +18,7 @@ import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
 import Logout from './components/pages/Logout';
 import NotFound from './components/pages/NotFound';
+import FormValidation from './components/pages/FormValidation';
 import Home from './components/Home/Home';
 import UserInfo from './components/User';
 
@@ -51,6 +52,7 @@ const Routes =(props)=>{
           {/* User route */}
           <PrivateRoute path="/user_details" exact component={UserInfo}/>
           {/* Page not found route */}
+          <PrivateRoute path="/form" component={FormValidation} />
           <Route path="*" component={NotFound} />
         </Switch>
       </Router>
