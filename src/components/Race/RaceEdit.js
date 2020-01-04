@@ -4,19 +4,20 @@ import RaceForm from './RaceForm';
 import Header from './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
 
- const RaceEdit = (props) => {
+const RaceEdit = (props) => {
 
-    return (
-       <Fragment>
-        <Header user={getCurrentUser()} />
+  return (
+      <Fragment>
+      <Header user={getCurrentUser()} />
       <Container>
-      <Row className="justify-content-center mb-3">
-        <Col lg="10">
-          <RaceForm match={props.match} history={props.history}/>
-        </Col>
-      </Row>
+        <Row className="justify-content-center mb-3">
+          <Col lg={10} sm={6}>
+            <RaceForm match={props.match} history={props.history}/>
+          </Col>
+        </Row>
       </Container>
-      </Fragment>
-    );
-  }
-  export default RaceEdit;
+    </Fragment>
+  );
+}
+
+export default RaceEdit;

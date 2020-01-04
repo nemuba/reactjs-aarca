@@ -7,19 +7,16 @@ import {getCurrentUser} from './../../services/auth';
 
 const RaceNew = (props) => {
 
-
-
     return (
       <Fragment>
         <Header user={getCurrentUser()} />
-      <Container>
-
-      <Row className="justify-content-center mb-3">
-        <Col lg="10">
-          <RaceForm match={props.match} history={props.history}/>
-        </Col>
-      </Row>
-      </Container>
+        <Container>
+          <Row className="justify-content-center mb-3">
+            <Col lg={10} sm={6}>
+              <RaceForm match={props.match} history={props.history}/>
+            </Col>
+          </Row>
+        </Container>
       </Fragment>
     );
   }

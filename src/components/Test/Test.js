@@ -60,9 +60,9 @@ const loadBody = () =>{
   return tests.map((test, index )=>{
       return (<tr key={index}>
         <td align="center">{test.id}</td>
-        <td>{test.race}</td>
+        <td>{test.race.substr(0,20)} ...</td>
         <td>{test.type_test}</td>
-        <td>
+        <td align="center">
           <Link to={`/tests/${test.id}/edit`} className="btn btn-success btn-sm">
             <FaPen />
           </ Link>
@@ -81,25 +81,25 @@ const loadBody = () =>{
       <Container>
         <Row className="justify-content-center mb-3">
           <Col lg={10} sm={6}>
-            <Card className="mt-3">
+            <Card className="m-3">
               <Card.Header className="bg-dark text-white">
-                <Card.Title className="mt-3">
+                <Card.Title className="mt-3 float-left">
                   <FaRunning className="mr-2" />
                   Lista de Provas
-                  <Link to="/tests/new" className="btn btn-outline-primary btn-sm float-right" >
-                    <FaPlus className="mr-2"/>
-                    Nova Prova
-                  </Link>
                 </Card.Title>
+                <Link to="/tests/new" className="btn btn-outline-primary btn-sm mt-3 float-right" >
+                  <FaPlus className="mr-2"/>
+                  Nova Prova
+                </Link>
               </Card.Header>
               <Card.Body >
                   <Table hover striped bordered responsive size="sm">
                   <thead>
                     <tr>
-                      <th>#</th>
+                      <th className="text-center">#</th>
                       <th>Corrida</th>
                       <th>Modalidade</th>
-                      <th>Options</th>
+                      <th className="text-center">Opções</th>
                     </tr>
                   </thead>
                   <tbody>

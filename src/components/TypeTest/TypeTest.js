@@ -68,7 +68,7 @@ const TypeTest = (props) => {
           <td align="center">{type.id}</td>
           <td>{type.genre}</td>
           <td>{type.oar} remo(s)</td>
-          <td>
+          <td align="center">
             <Link to={`/type_tests/${type.id}/edit`}
             className="btn btn-success btn-sm">
               <FaPen />
@@ -89,16 +89,16 @@ const TypeTest = (props) => {
       <Container>
         <Row className="justify-content-center mt-3">
           <Col sm={6} lg={10}>
-            <Card>
+            <Card className="m-3">
               <Card.Header className="bg-dark text-white">
-                <Card.Title className="mt-3">
+                <Card.Title className="mt-3 float-left">
                   <FaList className="mr-3"/>
                   Lista de tipos de Provas
-                  <Link to="/type_tests/new" className="btn btn-outline-primary btn-sm float-right" >
-                        <FaPlus className="mr-2"/>
-                        Novo Tipo de Corrida
-                      </Link>
                 </Card.Title>
+                <Link to="/type_tests/new" className="btn btn-outline-primary btn-sm mt-3 float-right" >
+                  <FaPlus className="mr-2"/>
+                  Novo Tipo de Corrida
+                </Link>
               </Card.Header>
               <Card.Body>
                 {erro && show ?
@@ -111,8 +111,8 @@ const TypeTest = (props) => {
                     <tr>
                       <th className="text-center">#</th>
                       <th>Gênero</th>
-                      <th>Número de Remo(s)</th>
-                      <th>Opções</th>
+                      <th>Nº de Remo(s)</th>
+                      <th className="text-center">Opções</th>
                     </tr>
                   </thead>
                   <tbody>

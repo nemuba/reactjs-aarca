@@ -63,10 +63,10 @@ const loadBody = () =>{
   return races.map((race, index )=>{
       return (<tr key={index}>
         <td align="center">{race.id}</td>
-        <td>{race.local}</td>
+        <td>{race.local.substr(0,20)} ...</td>
         <td>{race.description.substr(0,20)} ...</td>
         <td align="center">{race.date_race}</td>
-        <td>
+        <td align="center">
           <Link to={`/races/${race.id}/edit`} className="btn btn-success btn-sm">
             <FaPen />
           </ Link>
@@ -85,16 +85,16 @@ const loadBody = () =>{
         <Container>
           <Row className="justify-content-center mb-3">
             <Col lg={10} sm={6}>
-              <Card className="mt-3">
+              <Card className="m-3">
                 <Card.Header className="bg-dark text-white">
-                  <Card.Title className="mt-3">
+                  <Card.Title className="mt-3 float-left">
                     <FaRunning className="mr-2" />
                     Lista de Corridas
-                    <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right" >
-                      <FaPlus className="mr-2"/>
-                      Nova Corrida
-                    </Link>
                   </Card.Title>
+                  <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right mt-3" >
+                    <FaPlus className="mr-2"/>
+                    Nova Corrida
+                  </Link>
                 </Card.Header>
                 <Card.Body >
                     {erro && show ?
@@ -105,11 +105,11 @@ const loadBody = () =>{
                     <Table hover striped bordered responsive size="sm">
                     <thead>
                       <tr>
-                        <th>#</th>
+                        <th className="text-center">#</th>
                         <th>Local</th>
                         <th>Descrição</th>
-                        <th>Data da Corrida</th>
-                        <th>Options</th>
+                        <th className="text-center">Data</th>
+                        <th className="text-center">Opções</th>
                       </tr>
                     </thead>
                     <tbody>

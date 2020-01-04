@@ -58,7 +58,7 @@ const RaceForm = (props) => {
   }
 
   return(
-        <Card className="mt-3">
+        <Card className="m-3">
             <ToastContainer />
             <Card.Header
             className={ (errors.local || errors.description || errors.date_race) ? "bg-danger text-white" :"bg-dark text-white"}>

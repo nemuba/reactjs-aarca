@@ -72,7 +72,7 @@ const nextPage = () => {
         <tr key={index}>
           <td align="center">{sponsor.id}</td>
           <td>{sponsor.name}</td>
-          <td>
+          <td align="center">
           <Link to={`/sponsors/${sponsor.id}/edit`} className="btn btn-success btn-sm">
             <FaPen />
           </ Link>
@@ -91,16 +91,16 @@ const nextPage = () => {
     <Container>
     <Row className="justify-content-center">
       <Col sm={6} lg={10}>
-        <Card className="mt-3">
+        <Card className="m-3">
         <Card.Header className="bg-dark text-white">
-          <Card.Title className="mt-3">
+          <Card.Title className="mt-3 float-left">
             <FaMoneyBill className="mr-2" />
             Lista de Patrocinadores
-            <Link to="/sponsors/new" className="btn btn-outline-primary btn-sm float-right" >
-              <FaPlus className="mr-2"/>
-              Novo Patrocinador
-            </Link>
           </Card.Title>
+          <Link to="/sponsors/new" className="btn btn-outline-primary btn-sm float-right" >
+            <FaPlus className="mr-2"/>
+            Novo Patrocinador
+          </Link>
         </Card.Header>
         <Card.Body>
           {erro && show ?
@@ -111,9 +111,9 @@ const nextPage = () => {
           <Table hover striped bordered responsive size="sm">
             <thead>
               <tr>
-                <td>#</td>
-                <td>Nome</td>
-                <td>Options</td>
+                <th className="text-center">#</th>
+                <th>Nome</th>
+                <th className="text-center">Opções</th>
               </tr>
             </thead>
             <tbody>
