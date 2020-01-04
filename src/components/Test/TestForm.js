@@ -76,7 +76,11 @@ useEffect(() => {
         <Form>
           <Form.Group>
             <Form.Label>Corridas</Form.Label>
-            <Form.Control as="select" id="race_id" value={test.race_id} onChange={onChangeText}>
+            <Form.Control
+              as="select"
+              id="race_id"
+              value={test.race_id}
+              onChange={onChangeText}>
               <option>Selecione</option>
               {races.map((race, index)=>{
                 return(<option key={index} value={race.id}>{race.local}</option>);

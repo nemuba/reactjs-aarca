@@ -74,7 +74,7 @@ const TypeForm = (props) => {
                       onChange={onChangeText}
                       autoFocus={true}
                       />
-                     <Form.Text style={{color: "red"}}>{errors ? errors.genre : ''} </Form.Text>
+                    <Form.Text style={{color: "red"}}>{errors ? errors.genre : ''} </Form.Text>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
@@ -84,9 +84,8 @@ const TypeForm = (props) => {
                       value={type_test.oar}
                       placeholder="digite o numero de remos"
                       onChange={onChangeText}
-                      autoFocus={true}
                       />
-                     <Form.Text style={{color: "red"}}>{errors ? errors.oar : ''} </Form.Text>
+                    <Form.Text style={{color: "red"}}>{errors ? errors.oar : ''} </Form.Text>
                   </Col>
                 </Form.Group>
                 <Link to="/type_tests" className="btn btn-danger mr-2">Voltar</Link>
