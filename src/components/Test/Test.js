@@ -78,14 +78,14 @@ const loadBody = () =>{
     return(
       <Fragment>
         <Header user={getCurrentUser()}/>
-      <Container>
+      <Container fluid style={{marginBottom: '100px', marginTop: '50px'}}>
         <Row className="justify-content-center mb-3">
-          <Col lg={10} sm={6}>
+          <Col lg={8} sm={12}>
             <Card className="m-3">
               <Card.Header className="bg-dark text-white">
                 <Card.Title className="mt-3 float-left">
                   <FaRunning className="mr-2" />
-                  Lista de Provas
+                  Provas
                 </Card.Title>
                 <Link to="/tests/new" className="btn btn-outline-primary btn-sm mt-3 float-right" >
                   <FaPlus className="mr-2"/>
@@ -108,21 +108,27 @@ const loadBody = () =>{
                 </Table>
                 </Card.Body>
               <Card.Footer>
-                <p className="float-right m-0">
-                  Mostrando total de {total_test} Corrida(s)
-                </p>
-                <Button disabled={page === 1}
-                  variant={page === 1 ? "secondary" : "dark"}
-                  onClick={prevPage}
-                  className = "float-left mr-2" >
-                  <FaArrowLeft />
-                </Button>
-                <Button  disabled={!disable}
-                  onClick={nextPage}
-                  variant={!disable ? "secondary" : "dark"}
-                  className="float-left mr-2">
-                    <FaArrowRight  />
-                </Button>
+              <Row>
+                    <Col lg={6} sm={6}>
+                      <Button disabled={page === 1}
+                      variant={page === 1 ? "secondary" : "dark"}
+                      onClick={prevPage}
+                      className = "float-left mr-2" >
+                      <FaArrowLeft />
+                      </Button>
+                      <Button  disabled={!disable}
+                        onClick={nextPage}
+                        variant={!disable ? "secondary" : "dark"}
+                        className="float-left mr-2">
+                          <FaArrowRight  />
+                      </Button>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <p className="text-center mt-3 text-muted">
+                        Total de {total_test} Prova(s)
+                      </p>
+                    </Col>
+                  </Row>
               </Card.Footer>
             </Card>
           </Col>

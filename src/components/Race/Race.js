@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import {Container, Row, Col, Card, Button, Table, Alert} from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Table, Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import Header from './../../components/Header/Header';
@@ -21,7 +21,7 @@ useEffect(()=>{
   });
 },[]);
 
-// carrega todos as corridas
+// carrega todos as corridas paginadas
 useEffect(() =>{
   api.get(`/races?page=${page}`).then(response =>{
     setRaces(response.data.races);
@@ -82,14 +82,14 @@ const loadBody = () =>{
     return(
       <Fragment>
         <Header user={getCurrentUser()}/>
-        <Container>
+        <Container fluid style={{marginBottom: '100px', marginTop: '50px'}}>
           <Row className="justify-content-center mb-3">
-            <Col lg={10} sm={6}>
+            <Col lg={8} sm={12} >
               <Card className="m-3">
                 <Card.Header className="bg-dark text-white">
                   <Card.Title className="mt-3 float-left">
                     <FaRunning className="mr-2" />
-                    Lista de Corridas
+                    Corridas
                   </Card.Title>
                   <Link to="/races/new" className="btn btn-outline-primary btn-sm float-right mt-3" >
                     <FaPlus className="mr-2"/>
@@ -101,7 +101,7 @@ const loadBody = () =>{
                       <Alert key={erro} className="text-center" variant="danger" onClose={() => setShow(false)}dismissible >
                         {erro}
                       </Alert> : ""
-                     }
+                    }
                     <Table hover striped bordered responsive size="sm">
                     <thead>
                       <tr>
@@ -118,21 +118,27 @@ const loadBody = () =>{
                   </Table>
                   </Card.Body>
                 <Card.Footer>
-                  <p className="float-right m-0">
-                    Mostrando total de {total_race} Corrida(s)
-                  </p>
-                  <Button disabled={page === 1}
-                    variant={page === 1 ? "secondary" : "dark"}
-                    onClick={prevPage}
-                    className = "float-left mr-2" >
-                    <FaArrowLeft />
-                  </Button>
-                  <Button  disabled={!disable}
-                    onClick={nextPage}
-                    variant={!disable ? "secondary" : "dark"}
-                    className="float-left mr-2">
-                      <FaArrowRight  />
-                  </Button>
+                  <Row>
+                    <Col lg={6} sm={6}>
+                      <Button disabled={page === 1}
+                      variant={page === 1 ? "secondary" : "dark"}
+                      onClick={prevPage}
+                      className = "float-left mr-2" >
+                      <FaArrowLeft />
+                      </Button>
+                      <Button  disabled={!disable}
+                        onClick={nextPage}
+                        variant={!disable ? "secondary" : "dark"}
+                        className="float-left mr-2">
+                          <FaArrowRight  />
+                      </Button>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <p className="text-center mt-3 text-muted">
+                        Total de {total_race} Corrida(s)
+                      </p>
+                    </Col>
+                  </Row>
                 </Card.Footer>
               </Card>
             </Col>

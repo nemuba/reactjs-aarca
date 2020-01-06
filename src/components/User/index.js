@@ -35,10 +35,10 @@ const UserInfo = (props) => {
   return(
     <Fragment>
       <Header user={getCurrentUser()}/>
-      <Container>
+      <Container fluid style={{marginBottom: '100px', marginTop: '50px'}}>
       <Row className="justify-content-center">
-        <Col lg="6" sm="4" >
-          <Card style={{maxWidth: '400px' ,marginTop: '30px',marginRight: 10}}>
+        <Col lg={4} sm={6} >
+          <Card style={{marginTop: '30px'}}>
             <Card.Header className="text-center bg-dark text-white">
               <FaAcquisitionsIncorporated size={64} className="float-left"/>
               <h2 className="float-left mt-3">AARCA</h2>
@@ -49,7 +49,7 @@ const UserInfo = (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col lg="6" sm="6" >
+        <Col lg={6} sm={6} >
           <Card style={{marginTop: '30px'}}>
             <Card.Header className="bg-dark text-white">
               <h4 className="mt-1">Informações do usuário</h4></Card.Header>

@@ -88,16 +88,16 @@ const nextPage = () => {
   return(
     <Fragment>
       <Header user={getCurrentUser()}/>
-    <Container>
+    <Container fluid style={{marginBottom: '100px', marginTop: '50px'}}>
     <Row className="justify-content-center">
-      <Col sm={6} lg={10}>
+      <Col sm={12} lg={8}>
         <Card className="m-3">
         <Card.Header className="bg-dark text-white">
           <Card.Title className="mt-3 float-left">
             <FaMoneyBill className="mr-2" />
-            Lista de Patrocinadores
+            Patrocinadores
           </Card.Title>
-          <Link to="/sponsors/new" className="btn btn-outline-primary btn-sm float-right" >
+          <Link to="/sponsors/new" className="btn btn-outline-primary btn-sm float-right mt-3" >
             <FaPlus className="mr-2"/>
             Novo Patrocinador
           </Link>
@@ -122,21 +122,27 @@ const nextPage = () => {
           </Table>
         </Card.Body>
         <Card.Footer>
-          <p className="float-right m-0">
-            Mostrando total de {total_sponsor} Patrocinador(es)
-          </p>
-          <Button disabled={page === 1}
-            variant={page === 1 ? "secondary" : "dark"}
-            onClick={prevPage}
-            className = "float-left mr-2" >
-            <FaArrowLeft />
-          </Button>
-          <Button  disabled={!disable}
-            onClick={nextPage}
-            variant={!disable ? "secondary" : "dark"}
-            className="float-left mr-2">
-              <FaArrowRight  />
-          </Button>
+          <Row>
+            <Col lg={6} sm={6}>
+              <Button disabled={page === 1}
+              variant={page === 1 ? "secondary" : "dark"}
+              onClick={prevPage}
+              className = "float-left mr-2" >
+              <FaArrowLeft />
+              </Button>
+              <Button  disabled={!disable}
+                onClick={nextPage}
+                variant={!disable ? "secondary" : "dark"}
+                className="float-left mr-2">
+                  <FaArrowRight  />
+              </Button>
+            </Col>
+            <Col lg={6} sm={6}>
+              <p className="text-center mt-3 text-muted">
+                Total de {total_sponsor} Patrocinador(es)
+              </p>
+            </Col>
+          </Row>
         </Card.Footer>
         </Card>
       </Col>

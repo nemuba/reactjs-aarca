@@ -9,9 +9,9 @@ import {getCurrentUser} from './../../services/auth';
     return (
       <Fragment>
         <Header user={getCurrentUser()} />
-        <Container>
+        <Container fluid style={{marginBottom: '100px', marginTop: '50px'}}>
         <Row className="justify-content-center mb-3">
-          <Col lg="10">
+          <Col lg={8} sm={12}>
             <TestForm match={props.match} history={props.history}/>
           </Col>
         </Row>

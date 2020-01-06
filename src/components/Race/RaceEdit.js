@@ -9,9 +9,9 @@ const RaceEdit = (props) => {
   return (
       <Fragment>
       <Header user={getCurrentUser()} />
-      <Container>
+      <Container fluid style={{marginBottom: '100px', marginTop: '50px'}}>
         <Row className="justify-content-center mb-3">
-          <Col lg={10} sm={6}>
+          <Col sm={12} lg={8}>
             <RaceForm match={props.match} history={props.history}/>
           </Col>
         </Row>

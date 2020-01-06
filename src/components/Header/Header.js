@@ -6,7 +6,7 @@ import {isAuthenticated} from './../../services/auth';
 const Header = (props) => {
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
       <Navbar.Brand href="/">
         <FaAcquisitionsIncorporated />
         Arca
