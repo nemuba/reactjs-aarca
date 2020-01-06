@@ -48,11 +48,11 @@ const SignUp = (props) => {
   } else {
 
   return(
-  <Container fluid style={{marginBottom: '100px'}}>
-    <Row className="justify-content-center">
-      <Col sm={10} lg={4}>
+  <Container style={{marginBottom: '140px'}}>
+    <Row className="justify-content-center align-items-center">
+      <Col sm={10} lg={5}>
         <Card className="mb-3"
-        style={{margin: "0 auto", top: "60px", boxShadow: "0 2em 1em -0.7em"}}>
+        style={{ top: "60px", boxShadow: "0 2em 1em -0.7em"}}>
           <Card.Header className="bg-dark text-white text-center font-weight-bold">
             <FaUserCircle className="mr-2" size={32}/>
             <Card.Title className="mt-2">
@@ -62,7 +62,7 @@ const SignUp = (props) => {
           <Card.Body>
             {erro && show ?
               <Alert key={erro} className="text-center" variant="danger" onClose={() => setShow(false)}dismissible >
-                {erro}
+                {erro.validation}
               </Alert> : ""
             }
             <Form onSubmit={handleSubmit}>

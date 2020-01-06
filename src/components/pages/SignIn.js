@@ -42,11 +42,11 @@ const SignIn = (props) => {
   } else {
 
   return(
-  <Container fluid style={{marginBottom:'100px'}}>
-    <Row className="justify-content-center">
-      <Col sm={10} lg={4}>
+  <Container style={{marginBottom:'100px'}}>
+    <Row className="align-items-center">
+      <Col sm={10} lg={5}>
         <Card  className="mb-5"
-          style={{margin: "0 auto", top: "80px", boxShadow: "0 2em 1em -0.7em"}}>
+          style={{marginTop: '60px',boxShadow: "0 2em 1em -0.7em"}}>
           <Card.Header className="bg-dark text-white text-center font-weight-bold">
             <FaUserLock size={32}/>
             <Card.Title className="mt-2">
