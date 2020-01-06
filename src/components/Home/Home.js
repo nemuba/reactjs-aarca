@@ -25,7 +25,7 @@ const Home = (props) => {
   return(
     <Fragment>
       <Header user={user}/>
-    <Container>
+    <Container fluid style={{marginTop: '50px',marginBottom: '100px'}}>
       <Jumbotron className="mt-3">
         <h1>Bem, Vindo</h1>
         <p>
