@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import Header from  './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
-import {FaArrowLeft, FaArrowRight, FaPlus, FaPen, FaTrash, FaRunning} from 'react-icons/fa';
+import {FaArrowLeft, FaArrowRight, FaPlus, FaPen, FaTrash, FaAward} from 'react-icons/fa';
 
 const Test = (props) => {
 
@@ -84,7 +84,7 @@ const loadBody = () =>{
             <Card className="m-3">
               <Card.Header className="bg-dark text-white">
                 <Card.Title className="mt-3 float-left">
-                  <FaRunning className="mr-2" />
+                  <FaAward className="mr-2" />
                   Provas
                 </Card.Title>
                 <Link to="/tests/new" className="btn btn-outline-primary btn-sm mt-3 float-right" >

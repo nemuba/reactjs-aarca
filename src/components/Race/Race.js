@@ -65,6 +65,7 @@ const loadBody = () =>{
         <td align="center">{race.id}</td>
         <td>{race.local.substr(0,20)} ...</td>
         <td>{race.description.substr(0,20)} ...</td>
+        <td>{race.status}</td>
         <td align="center">{race.date_race}</td>
         <td align="center">
           <Link to={`/races/${race.id}/edit`} className="btn btn-success btn-sm">
@@ -108,6 +109,7 @@ const loadBody = () =>{
                         <th className="text-center">#</th>
                         <th>Local</th>
                         <th>Descrição</th>
+                        <th>Status</th>
                         <th className="text-center">Data</th>
                         <th className="text-center">Opções</th>
                       </tr>
