@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 // import { Container } from './styles';
 const RaceForm = (props) => {
@@ -14,9 +13,13 @@ const RaceForm = (props) => {
   const [race, setRace] = useState({
     local: '',
     description: '',
-    date_race: ''
+    status: '',
+    date_race:''
   });
-  const [errors, setErrors] = useState({});
+
+  const [status, setStatus] = useState([]);
+
+  const [errors, setErrors] = useState([]);
 
   useEffect(() =>{
     if(props.match.params.id){
@@ -26,6 +29,12 @@ const RaceForm = (props) => {
       });
     }
   },[props.match.params.id]);
+
+  useEffect(()=>{
+    api.get('/races/new')
+    .then(response => setStatus(response.data.race_enums))
+    .catch(erro => console.log(erro));
+  },[]);
 
   const onChangeText = (e) => {
     setRace({...race ,[e.target.id]: e.target.value});
@@ -40,21 +49,24 @@ const RaceForm = (props) => {
     await api[method](url, {
       race: race
     }).then(response => {
-      setRace(response.data);
+      setErrors({});
       notify(race.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
     }).catch(error => {
       setErrors(error.response.data);
       notify("Preencha todos campos !");
     }).finally(() =>{
-      if(errors !== null){
-        return;
-      }else{
         setTimeout(() => {
-          props.history.push('/races')
+            props.history.push('/races');
         }, 2000);
-      }
     });
+  }
 
+  const renderStatus = (status) =>{
+    return(
+      status.map((option)=>{
+        return(<option key={option[2]} value={option[1]}>{option[0]}</option>);
+      })
+    );
   }
 
   return(
@@ -92,11 +104,26 @@ const RaceForm = (props) => {
                 <Form.Group as={Row} className="mb-3">
                   <Form.Label column sm={2} >Data da Corrida</Form.Label>
                     <Col sm={10}>
-                      <Form.Control type="date" id="date_race"
+                      <Form.Control
+                        id="date_race"
+                        type="date"
                         value={race.date_race}
-                        onChange={onChangeText}/>
-                         <Form.Text style={{color: "red"}}>{errors.date_race ? [...errors.date_race] : ''} </Form.Text>
+                        onChange={onChangeText}
+                        />
+                        <Form.Text style={{color: "red"}}>{errors.date_race ? [...errors.date_race] : ''} </Form.Text>
                     </Col>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Status da corrida</Form.Label>
+                  <Form.Control
+                    as="select"
+                    id="status"
+                    value={race.status}
+                    onChange={onChangeText}>
+                    <option>Selecione</option>
+                    {renderStatus(status)}
+                  </Form.Control>
+                  <Form.Text style={{color: "red"}}>{errors.status ? [...errors.status] : ''} </Form.Text>
                 </Form.Group>
                 <Link to="/races" className="btn btn-danger mr-2">Voltar</Link>
                 <Button variant={race.id ? "success" :"primary"} type="submit" onClick={handleSubmit}>

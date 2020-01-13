@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import Header from './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
+import {format, parseISO} from 'date-fns';
 import {FaArrowLeft, FaArrowRight, FaPlus, FaPen, FaTrash, FaRunning} from 'react-icons/fa';
 
 const Race = (props) => {
@@ -59,6 +60,8 @@ const handleDestroy = async (race) =>{
   }
 }
 
+const formatDate = date => format(parseISO(date),'dd/MM/yyyy');
+
 const loadBody = () =>{
   return races.map((race, index )=>{
       return (<tr key={index}>
@@ -66,7 +69,7 @@ const loadBody = () =>{
         <td>{race.local.substr(0,20)} ...</td>
         <td>{race.description.substr(0,20)} ...</td>
         <td>{race.status}</td>
-        <td align="center">{race.date_race}</td>
+        <td align="center">{formatDate(race.date_race)}</td>
         <td align="center">
           <Link to={`/races/${race.id}/edit`} className="btn btn-success btn-sm">
             <FaPen />

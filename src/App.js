@@ -2,8 +2,10 @@ import React, { Fragment } from 'react';
 import Router from './routes';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = (props) => {
+
   const current_date = ()=> {
     let today = new Date();
     let date = today.getFullYear();

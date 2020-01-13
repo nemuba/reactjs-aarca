@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import api from './../../services/api';
 import { FaRunning } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
+import  Select  from 'react-select';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TestForm = (props) => {
@@ -17,6 +18,7 @@ const TestForm = (props) => {
 
   const notify = (msg) => toast(`${msg}`,{autoClose: 2000});
 
+
 useEffect(() => {
   if (props.match.params.id) {
     api.get(`/tests/${props.match.params.id}`).then(response => {
@@ -29,12 +31,16 @@ useEffect(() => {
   useEffect(()=>{
     api.get('/tests/new').then( response => {
       setRaces(response.data.races);
+      console.log(response.data.races);
       setTypeTests(response.data.type_tests);
     });
   },[]);
 
-  const onChangeText = (e) => {
-    setTest({...test ,[e.target.id]: e.target.value});
+  const onChangeType = (selected) => {
+    setTest({...test, type_test_id: selected?.value});
+  }
+  const onChangeRace = (selected) =>{
+    setTest({...test, race_id: selected?.value});
   }
 
   const handleSubmit = async (e) => {
@@ -52,7 +58,7 @@ useEffect(() => {
       setErrors(error.response.data);
       notify("Preencha todos os campos !");
     }).finally(()=>{
-      if(errors !== null){
+      if(errors?.race_id || errors?.type_test_id){
         return;
       }else{
         setTimeout(() => {
@@ -76,30 +82,20 @@ useEffect(() => {
         <Form>
           <Form.Group>
             <Form.Label>Corridas</Form.Label>
-            <Form.Control
-              as="select"
-              id="race_id"
-              value={test.race_id}
-              onChange={onChangeText}>
-              <option>Selecione</option>
-              {races.map((race, index)=>{
-                return(<option key={index} value={race.id}>{race.local}</option>);
-              })}
-            </Form.Control>
+            <Select
+              onChange={onChangeRace}
+              isClearable
+              placeholder={"Selecione a Corrida"}
+              options={races}/>
             <Form.Text style={{color: "red"}}>{errors ? errors.race : ''} </Form.Text>
           </Form.Group>
           <Form.Group>
             <Form.Label>Modalidade</Form.Label>
-            <Form.Control as="select" id="type_test_id" value={test.type_test_id} onChange={onChangeText}>
-              <option>Selecione</option>
-              {type_tests.map((type_test, index)=>{
-                return(
-                <option key={index}
-                value={type_test.id}>
-                  {type_test.genre} - {type_test.oar} remos (s)
-                  </option>);
-              })}
-            </Form.Control>
+            <Select
+              onChange={onChangeType}
+              isClearable
+              placeholder={"Selecione o tipo de prova"}
+              options={type_tests}/>
             <Form.Text style={{color: "red"}}>{errors ? errors.type_test : ''} </Form.Text>
           </Form.Group>
           <Link to="/tests" className="btn btn-danger float-left mr-2">Voltar</Link>
