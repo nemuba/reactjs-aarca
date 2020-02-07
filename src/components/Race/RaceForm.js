@@ -54,10 +54,6 @@ const RaceForm = (props) => {
     }).catch(error => {
       setErrors(error.response.data);
       notify("Preencha todos campos !");
-    }).finally(() =>{
-        setTimeout(() => {
-            props.history.push('/races');
-        }, 2000);
     });
   }
 

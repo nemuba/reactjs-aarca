@@ -31,7 +31,6 @@ useEffect(() => {
   useEffect(()=>{
     api.get('/tests/new').then( response => {
       setRaces(response.data.races);
-      console.log(response.data.races);
       setTypeTests(response.data.type_tests);
     });
   },[]);
@@ -57,14 +56,6 @@ useEffect(() => {
     }).catch(error => {
       setErrors(error.response.data);
       notify("Preencha todos os campos !");
-    }).finally(()=>{
-      if(errors?.race_id || errors?.type_test_id){
-        return;
-      }else{
-        setTimeout(() => {
-          props.history.push('/tests');
-        }, 2000);
-      }
     });
   }
 
@@ -86,7 +77,8 @@ useEffect(() => {
               onChange={onChangeRace}
               isClearable
               placeholder={"Selecione a Corrida"}
-              options={races}/>
+              options={races}
+              defaultValue={races.find(race => race.value === test.race_id)}/>
             <Form.Text style={{color: "red"}}>{errors ? errors.race : ''} </Form.Text>
           </Form.Group>
           <Form.Group>
