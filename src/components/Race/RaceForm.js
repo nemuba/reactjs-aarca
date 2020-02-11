@@ -14,9 +14,11 @@ const RaceForm = (props) => {
     local: '',
     description: '',
     status: '',
+    sponsor_id: '',
     date_race:''
   });
 
+  const [sponsors, setSponsors] = useState([]);
   const [status, setStatus] = useState([]);
 
   const [errors, setErrors] = useState([]);
@@ -32,8 +34,11 @@ const RaceForm = (props) => {
 
   useEffect(()=>{
     api.get('/races/new')
-    .then(response => setStatus(response.data.race_enums))
-    .catch(erro => console.log(erro));
+    .then(response => {
+      setStatus(response.data.race_enums);
+      setSponsors(response.data.sponsors);
+    }).catch(erro => console.log(erro));
+
   },[]);
 
   const onChangeText = (e) => {
@@ -53,6 +58,7 @@ const RaceForm = (props) => {
       notify(race.id ? "Atualizado com Sucesso !" : "Criado Com Sucesso !");
     }).catch(error => {
       setErrors(error.response.data);
+      console.log(error);
       notify("Preencha todos campos !");
     });
   }
@@ -61,6 +67,14 @@ const RaceForm = (props) => {
     return(
       status.map((option)=>{
         return(<option key={option[2]} value={option[1]}>{option[0]}</option>);
+      })
+    );
+  }
+
+  const renderSponsors = (sponsor) =>{
+    return(
+      sponsor.map((option,index) =>{
+        return(<option key={index} value={option.id}>{option.name}</option>);
       })
     );
   }
@@ -120,6 +134,18 @@ const RaceForm = (props) => {
                     {renderStatus(status)}
                   </Form.Control>
                   <Form.Text style={{color: "red"}}>{errors.status ? [...errors.status] : ''} </Form.Text>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Patrocinador da corrida</Form.Label>
+                  <Form.Control
+                    as="select"
+                    id="sponsor_id"
+                    value={race.sponsor_id}
+                    onChange={onChangeText}>
+                    <option>Selecione</option>
+                    {renderSponsors(sponsors)}
+                  </Form.Control>
+                  <Form.Text style={{color: "red"}}>{errors.sponsor_id ? [...errors.sponsor_id] : ''} </Form.Text>
                 </Form.Group>
                 <Link to="/races" className="btn btn-danger mr-2">Voltar</Link>
                 <Button variant={race.id ? "success" :"primary"} type="submit" onClick={handleSubmit}>
