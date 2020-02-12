@@ -11,6 +11,7 @@ const Home = (props) => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
+    document.title = "AARCA - Home";
     api.get('/get_user')
       .then(response => {
         setCurrentUser(response.data.user.email);

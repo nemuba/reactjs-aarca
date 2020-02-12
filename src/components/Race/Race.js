@@ -17,6 +17,7 @@ const [erro, setErro] = useState('');
 const [show, setShow] = useState(false);
 
 useEffect(()=>{
+  document.title = "AARCA - Corridas";
   api.get('/races').then(response => {
     setTotalRace(response.data.total);
   });

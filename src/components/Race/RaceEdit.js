@@ -3,8 +3,13 @@ import {Container, Row, Col} from 'react-bootstrap';
 import RaceForm from './RaceForm';
 import Header from './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
+import { useEffect } from 'react';
 
 const RaceEdit = (props) => {
+
+  useEffect(()=>{
+    document.title = "AARCA - Editar Corrida";
+  },[]);
 
   return (
       <Fragment>

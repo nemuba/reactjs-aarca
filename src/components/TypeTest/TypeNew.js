@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import TypeForm from './TypeForm';
 import Header from './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
 
  const TypeNew = (props) => {
+
+  useEffect(()=> document.title = "AARCA - Novo Tipo de Prova",[]);
 
     return (
       <Fragment>

@@ -3,9 +3,13 @@ import {Container, Row, Col} from 'react-bootstrap';
 import SponsorForm from './SponsorForm';
 import Header from './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
+import { useEffect } from 'react';
 
 
 const SponsorEdit = (props) => {
+
+  useEffect(()=>  document.title = "AARCA - Editar Patrocinador",[]);
+
     return (
       <Fragment>
         <Header user={getCurrentUser()} />

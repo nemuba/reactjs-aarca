@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import TestForm from './TestForm';
 import Header from  './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
 
  const TestNew = (props) => {
+
+  useEffect(()=> document.title = "AARCA - Nova Prova",[]);
 
     return (
       <Fragment>

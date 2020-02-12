@@ -16,6 +16,7 @@ const Sponsor = (props) =>{
   const [page, setPage] = useState(1);
 
   useEffect(()=>{
+    document.title = "AARCA - Patrocinadores";
     api.get('/sponsors')
     .then(response => setSponsors(response.data.sponsors))
     .catch(error => console.log(error));
