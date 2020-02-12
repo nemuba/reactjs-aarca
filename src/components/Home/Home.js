@@ -29,8 +29,7 @@ const Home = (props) => {
       <Jumbotron className="mt-3">
         <h1>Bem, Vindo</h1>
         <p>
-          This is a simple hero unit, a simple jumbotron-style component for calling
-          extra attention to featured content or information.
+          Associação de Amigos e Remadores da Canoa Caiçara.
         </p>
         <p>
           <Link to="/races" className="btn btn-primary">Ver Corridas</Link>
