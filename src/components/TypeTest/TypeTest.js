@@ -16,6 +16,7 @@ const TypeTest = (props) => {
   const [show, setShow] = useState(false);
 
   useEffect(()=>{
+    document.title = "AARCA - Tipos de prova";
     api.get('/type_tests').then(response => {
       setTotalType(response.data.total);
     });

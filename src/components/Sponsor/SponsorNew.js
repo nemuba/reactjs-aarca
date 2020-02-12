@@ -1,4 +1,4 @@
-import React, { Fragment} from 'react';
+import React, { Fragment, useEffect} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import SponsorForm from './SponsorForm';
 import Header from './../../components/Header/Header';
@@ -6,6 +6,9 @@ import {getCurrentUser} from './../../services/auth';
 
 
 const SponsorNew = (props) => {
+
+  useEffect(()=>  document.title = "AARCA - Novo Patrocinador",[]);
+
     return (
       <Fragment>
         <Header user={getCurrentUser()} />

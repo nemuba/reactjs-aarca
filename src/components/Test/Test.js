@@ -14,6 +14,7 @@ const [disable,setDisable] = useState(false);
 const [total_test, setTotalTest] = useState(0);
 
 useEffect(()=>{
+  document.title = "AARCA - Provas";
   api.get('/tests').then(response => {
     setTotalTest(response.data.total);
   });

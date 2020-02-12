@@ -3,8 +3,11 @@ import {Container, Row, Col} from 'react-bootstrap';
 import TestForm from './TestForm';
 import Header from  './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
+import { useEffect } from 'react';
 
  const TestEdit = (props) => {
+
+  useEffect(()=> document.title = "AARCA - Editar Prova",[]);
 
     return (
       <Fragment>

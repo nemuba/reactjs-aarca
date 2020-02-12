@@ -3,8 +3,11 @@ import {Container, Row, Col} from 'react-bootstrap';
 import TypeForm from './TypeForm';
 import Header from './../../components/Header/Header';
 import {getCurrentUser} from './../../services/auth';
+import { useEffect } from 'react';
 
- const TypeNew = (props) => {
+ const TypeEdit = (props) => {
+
+  useEffect(()=> document.title = "AARCA - Editar Tipo de Prova",[]);
 
     return (
       <Fragment>
@@ -19,4 +22,4 @@ import {getCurrentUser} from './../../services/auth';
       </Fragment>
     );
   }
-  export default TypeNew;
+  export default TypeEdit;
